@@ -67,7 +67,7 @@ void PostOrderReverse(ST_TREE_NODE *pTree)
 /**
 * 创建一个二叉树,值为-1表示没有孩子节点
 **/
-void CreateTree(ST_TREE_NODE *pTree)
+ST_TREE_NODE* CreateTree()
 {
 	int i = 0;
 	ST_TREE_NODE *pNode = NULL;
@@ -75,50 +75,94 @@ void CreateTree(ST_TREE_NODE *pTree)
 	scanf("%d", &i);
 	if (0 > i)
 	{
-		return;
+		return NULL;
 	}
 	
 	printf("TreeNode value:%d\n", i);
-	pTree->value = i;
 	
-	/**
-	* 创建左子树
-	**/
 	pNode = malloc(sizeof(ST_TREE_NODE));
 	if (NULL == pNode)
 	{
 		printf("malloc falied\n");
-		return;
+		return NULL;
 	}
+	pNode->value = i;
+	pNode->pLeft = CreateTree();
+	pNode->pRight = CreateTree();
 	
-	CreateTree(pNode);
+	return pNode;
+}
 
-	printf("Node parent value:%d\n", i);
-	pTree->pLeft = pNode;
-	
-	/**
-	* 创建右子树
-	**/
-	pNode = malloc(sizeof(ST_TREE_NODE));
-	if (NULL == pNode)
-	{
-		printf("malloc falied\n");
-		return;
-	}
-	
-	CreateTree(pNode);
-	printf("Node parent value:%d\n", i);
-	pTree->pRight = pNode;
+int maxDepthTree(ST_TREE_NODE *pRoot)
+{
+    int LeftDepth = 0;
+    int RightDepth = 0;
+    
+    if (pRoot == NULL)
+    {
+        return 0;
+    }
+    
+    /**
+    * 只有根节点的树的深度为1
+    **/
+    LeftDepth = maxDepthTree(pRoot->pLeft) + 1;
+    RightDepth = maxDepthTree(pRoot->pRight) + 1;
+    
+    return LeftDepth > RightDepth ? LeftDepth : RightDepth;
+    
+}
+
+int minDepthTree(ST_TREE_NODE *pRoot)
+{
+    int LeftDepth = 0;
+    int RightDepth = 0;
+    
+    if (pRoot == NULL)
+    {
+        return 0;
+    }
+    
+    /**
+    * 只有根节点的树的深度为1
+    **/
+    LeftDepth = maxDepthTree(pRoot->pLeft);
+    RightDepth = maxDepthTree(pRoot->pRight);
+    
+    /**
+    * 只存在右子树,返回右子树的深度
+    **/
+    if (LeftDepth == 0 && RightDepth > 0)
+    {
+        return RightDepth + 1;
+    }
+    else if (RightDepth == 0 && LeftDepth > 0)
+    {
+        return LeftDepth + 1;
+    }
+    else
+    {
+        return LeftDepth < RightDepth ? LeftDepth + 1: RightDepth + 1;
+    }
+    
+    return 1;
 }
 
 int main()
 {
-	ST_TREE_NODE stTree;
+	ST_TREE_NODE *pTree = NULL;
 	
-	CreateTree(&stTree);
-	PreOrderReverse(&stTree);
-	MidOrderReverse(&stTree);
-	PostOrderReverse(&stTree);
+	pTree = CreateTree();
+	if (NULL == pTree)
+	{
+		return -1;
+	}
+	PreOrderReverse(pTree);
+	MidOrderReverse(pTree);
+	PostOrderReverse(pTree);
+	
+	printf("maxDepthTree=%d\n", maxDepthTree(pTree));
+	printf("minDepthTree=%d\n", minDepthTree(pTree));
 	
 	return 0;
 }
