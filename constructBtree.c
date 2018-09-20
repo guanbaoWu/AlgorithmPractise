@@ -9,21 +9,6 @@ typedef struct TREE_NODE{
 }ST_TREE_NODE;
 
 /**
-* 前序遍历第一个节点为根节点或者子树的根节点
-* 中序遍历,根节点将会将序列分成左右子树
-* 递归中序遍历分成左右子树
-**/
-ST_TREE_NODE* BtreeConstruct(int *preOrder, int *inOrder, int length)
-{
-	if (NULL == preOrder || NULL == inOrder || 0 >= length)
-	{
-		return NULL;
-	}
-	
-	return Construct(preOrder, preOrder+length-1, inOrder, inOrder+length-1);
-}
-
-/**
 * @startPreOrder:前序遍历序列起始点
 * @endPreOrder:前序遍历序列终止点
 * @endInOrder:中序序遍历序列起始点
@@ -35,11 +20,10 @@ ST_TREE_NODE* Construct
 	int *startPreOrder, 
 	int *endPreOrder, 
 	int *startInOrder,
-	int *endInOrder,
+	int *endInOrder
 )
 {
 	int *startOrder = NULL;
-	int *endOrder = NULL;
 	
 	int length = 0;
 	
@@ -50,7 +34,7 @@ ST_TREE_NODE* Construct
 	/**
 	* 前序遍历序列的首个元素即为根节点
 	**/
-	pTreeNode->value = inOrder[i];
+	pTreeNode->value = startPreOrder[0];
 	pTreeNode->pLeft = NULL;
 	pTreeNode->pRight = NULL;
 	
@@ -105,4 +89,20 @@ ST_TREE_NODE* Construct
 
 	return pTreeNode;
 
+}
+
+
+/**
+* 前序遍历第一个节点为根节点或者子树的根节点
+* 中序遍历,根节点将会将序列分成左右子树
+* 递归中序遍历分成左右子树
+**/
+ST_TREE_NODE* BtreeConstruct(int *preOrder, int *inOrder, int length)
+{
+	if (NULL == preOrder || NULL == inOrder || 0 >= length)
+	{
+		return NULL;
+	}
+	
+	return Construct(preOrder, preOrder+length-1, inOrder, inOrder+length-1);
 }
