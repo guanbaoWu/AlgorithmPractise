@@ -1,6 +1,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 using namespace std;
 
@@ -10,6 +12,8 @@ using namespace std;
 
 class Solution
 {
+public:
+
 	/**
 	* @brief:打印从1到最大的n位数,如n=3时,将1至999打印出来
 	* @n:位数
@@ -26,7 +30,7 @@ class Solution
 		* 创建n+1位的数组表示n位最大的数字,剩下的一位用于保存'\0'
 		**/
 		char *number = new char[n+1];
-		memset(nember, '0', n);
+		memset(number, '0', n);
 		number[n] = '\0';
 		
 		/**
@@ -64,7 +68,7 @@ class Solution
 		{
 			int sum = number[i] - '0' + nTakeOver;
 			if (i == nLength-1)
-				sum++
+				sum++;
 			
 			/**
 			* 发生了进位
@@ -99,7 +103,7 @@ class Solution
 		return isover;
 	}
 	
-	void PrintNumber(number)
+	void PrintNumber(char* number)
 	{
 		if (NULL == number)
 		{
@@ -131,3 +135,18 @@ class Solution
 	}
 	
 };
+
+
+int main()
+{
+	Solution s;
+	
+	int n = 0;
+			
+	cout << "input a number: " << endl;
+	cin >> n;
+
+	s.printMaxNumberofN(n);
+	
+	return 0;
+}
