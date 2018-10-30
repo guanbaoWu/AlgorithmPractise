@@ -13,6 +13,7 @@ struct ListNode
 **/
 class Solution
 {
+public:
     void deleteduplication(struct ListNode **pHead)
     {
         if (NULL == pHead || NULL == *pHead)
