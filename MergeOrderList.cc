@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -14,26 +16,16 @@ struct ListNode
 * 解决思路：设置两个临时节点指针用于保存当前比较节点的下一节点，循环往复完成合并
 **/
 
-typedef int (*GenValue)(int);
+typedef int (*GenValue)(unsigned int);
 
-int GenEven(int num)
+int GenEven(unsigned int num)
 {
-    int i = 1;
-    do
-    {
-        i << 2;
-        
-    }while(i < num)
+    return num * 2;
 }
 
-int GenOdd(int num)
+int GenOdd(unsigned int num)
 {
-    int i = 1;
-    do
-    {
-        i = (i << 2) + 1;
-        
-    }while(i < num)
+    return ((num * 2) + 1);
 }
 
 class Solution
@@ -89,7 +81,6 @@ public:
     **/
     struct ListNode* MergeOrderList(struct ListNode *pHead1, struct ListNode *pHead2)
     {
-        struct ListNode *pLoopNode = isListLoop(pListpHead);
         if (NULL == pHead1 || NULL == pHead1->m_pNext)
         {
             return pHead2;
@@ -106,7 +97,7 @@ public:
         struct ListNode *pNode1 = pHead1->m_pNext;
         struct ListNode *pNode2 = pHead2->m_pNext;
         
-        pNode1->m_nvalue < pNode2->m_nvalue ? pHead = pHead1 : pHead = pHead2  
+        pNode1->m_nvalue < pNode2->m_nvalue ? pHead = pHead1 : pHead = pHead2;
         while(pNode1 != NULL && pNode2 != NULL)
         {
             struct ListNode *pTemp1 = pNode1->m_pNext;
@@ -125,8 +116,7 @@ public:
         }
         
         return pHead;
-    }
-    
+    }    
 };
 
 int main()
@@ -140,21 +130,24 @@ int main()
 		return -1;
 	}
     
-    if (0 != s.createList(&stList1, GenOdd))
+    if (0 != s.createList(&stList2, GenOdd))
 	{
 		return -1;
 	}
 	
+    cout << "print stList1:" << endl;
 	s.printList(&stList1);
+    
+    cout << "print stList2:" << endl;
     s.printList(&stList2);
     
     struct ListNode *pHead = s.MergeOrderList(&stList1, &stList2);
     
     if (NULL != pHead)
     {
+        cout << "print MergeOrderList:" << endl;
         s.printList(pHead);
     }
 	
-	return 0;
-	
+	return 0;	
 }
