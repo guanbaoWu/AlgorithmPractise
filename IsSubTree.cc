@@ -82,3 +82,12 @@ public:
         return result;
     }
 };
+
+int main()
+{
+    Solution s;
+    
+    s.IsSubTree(NULL, NULL);
+    
+    return 0;
+}

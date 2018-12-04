@@ -26,16 +26,23 @@ public:
         /**
         * 交换左右子树
         **/
-        struct BinaryTreeNode *pTemp = pATree->m_pLeft;
-        pATree->m_pLeft = pATree->m_pRight;
-        pATree->m_pRight = pTemp;
+        struct BinaryTreeNode *pTemp = pTree->m_pLeft;
+        pTree->m_pLeft = pTree->m_pRight;
+        pTree->m_pRight = pTemp;
         
         /**
         * 继续递归交换左右子树的左右子树节点
         **/
-        (void)MirrowBinaryTree(pATree->m_pLeft);
-        (void)MirrowBinaryTree(pATree->m_pRight);
-        
-        return 0;
+        MirrowBinaryTree(pTree->m_pLeft);
+        MirrowBinaryTree(pTree->m_pRight);
     }
 };
+
+int main()
+{
+    Solution s;
+    
+    s.MirrowBinaryTree(NULL);
+    
+    return 0;
+}
