@@ -26,7 +26,7 @@ public:
     /**
     * 向右，下，左，上前进，分别打印
     **/
-    void CircleLoopPrint(int **a, int start, int row, int col)
+    void CircleLoopPrint(int (*a)[5], int start, int row, int col)
     {
         int i = 0;
         int endx = col - start - 1;
@@ -40,7 +40,7 @@ public:
         **/
         for (i = start; i <= endx; ++i)
         {
-            cout << a[start][x] << " ";
+            cout << a[start][i] << " ";
         }
         
         /**
@@ -78,7 +78,7 @@ public:
         
     }
     
-    void PrintMatrix(int **a, int row, int col)
+    void PrintMatrix(int (*a)[5], int row, int col)
     {
         int i;
         
@@ -112,27 +112,12 @@ int main()
                    {12,22,32,42,52}
                   };
                   
-    int c[4][4] = {{10,20,30,40},
-                   {61,71,81,91},
-                   {21,31,41,51},
-                   {12,22,32,42}
-                  };
-                  
-    int d[1][4] = {{10,20,30,40}};
     
-    int e[4][1] = {{10},
-                   {61},
-                   {21},
-                   {12}
-                  };
     
     Solution s;
     
-    s.PrintMatrix(&a, 5, 5);
-    s.PrintMatrix((int **)b, 4, 5);
-    s.PrintMatrix((int **)c, 4, 4);
-    s.PrintMatrix((int **)d, 1, 4);
-    s.PrintMatrix((int **)e, 4, 1);
+    s.PrintMatrix(a, 5, 5);
+    s.PrintMatrix(b, 4, 5);
     
     return 0;
 }
