@@ -4,26 +4,11 @@
 
 const int maxLength = 110;
 
-void Print_num(char* num, int size)
-{
-    int i = 0;
-    
-    if (NULL == num || 0 >= size)
-        return;
-        
-    for (i = size - 1; i > 0; --i)
-    {
-        printf("%d", num[i]);
-    }
-    
-    printf("%d\n", num[0]);
-}
-
 char * multiply(char * num1, char * num2)
 {
     int num1_size = 0;
     int num2_size = 0;
-    int i =0, j = 0, p = 0, h = 0;
+    int i =0, j = 0;
     
     char *result = NULL;
     
@@ -39,44 +24,48 @@ char * multiply(char * num1, char * num2)
         return NULL;
     }
     
+    if ((num1_size == 1 && num1[0] == '0') || (num2_size == 1 && num2[0] == '0'))
+        return "0";
+        
     /**
-    * 分配一个存储结果的数组
+    * 分配一个存储结果的数组,初始化为'0'
     **/
-    result = (char*)malloc(maxLength * 2 + 1);
-    memset(result, 0, maxLength * 2 + 1);
+    result = (char*)malloc(num1_size + num2_size + 1);
+    memset(result, '0', num1_size + num2_size);
+    result[num1_size + num2_size] = '\0';
     
     /**
-    * 两个字符串开始相乘
+    * 两个字符串开始相乘,从低位(数组结尾至前)
     **/
     for(i = num1_size - 1; i >= 0; --i)
     {
         for (j = num2_size - 1; j >= 0; --j)
         {
-            result[p] = result[p] + (num1[i] - '0') * (num2[j] - '0') + h;
+            result[i+j+1] = (result[i+j+1] - '0') + (num1[i] - '0') * (num2[j] - '0');
             
             /**
-            * 获取是否有进位
+            * 进位放在前面
             **/
-            h = result[p] / 10;
-            result[p] = result[p] % 10;
-            
-            ++p;
+            result[i+j] = result[i+j+1] / 10 + '0';
+            result[i+j+1] = result[i+j+1] % 10 + '0';            
         }
-        
-        /**
-        * 还有进位
-        **/
-        while(h > 0)
-        {
-            result[p] = h % 10;
-            h = h / 10;
-            ++p;
-        }
-        
-        p = p - 1;
     }
     
-    Print_num(result, p+1);
+    /**
+    * 去掉前导'0'
+    **/
+    for(i=0; i < num1_size + num2_size + 1; ++i)
+    {
+        if (result[i] != '0') 
+            break;
+    }
+    
+    if (i == num1_size + num2_size + 1)
+        return "0";
+    
+    memmove(result, &result[i], num1_size + num2_size + 1 - i);
+    
+    printf("%s\n", result);
     
     return result;
     
