@@ -46,7 +46,7 @@ char * multiply(char * num1, char * num2)
             /**
             * 进位放在前面
             **/
-            result[i+j] = result[i+j+1] / 10 + '0';
+            result[i+j] = (result[i+j] - '0') + result[i+j+1] / 10 + '0';
             result[i+j+1] = result[i+j+1] % 10 + '0';            
         }
     }
